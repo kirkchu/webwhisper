@@ -1,0 +1,12 @@
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# macOS folders
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# Project-only specifications
+/spec/

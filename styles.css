@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root { --ink: #20231f; --muted: #747971; --paper: #f5f2eb; --card: #fffdf8; --line: #dcd9d0; --coral: #e9674e; --green: #3d6b55; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: 'Space Grotesk', sans-serif; }
+body::before { content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .28; background-image: radial-gradient(#c8c2b5 .6px, transparent .6px); background-size: 7px 7px; }
+.app-shell { position: relative; max-width: 1180px; margin: auto; padding: 28px 42px 32px; }
+.topbar, .record-actions, .model-row, footer, .result-heading { display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 11px; color: inherit; font-weight: 700; text-decoration: none; letter-spacing: -.04em; }
+.brand-mark { display: grid; width: 32px; height: 32px; place-items: center; color: white; background: var(--ink); border-radius: 50%; font-family: 'DM Mono', monospace; font-size: 14px; }
+.secure-label, .format-badge, .section-kicker, .field-note, .model-row, .tip-copy, footer { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .04em; }
+.status-dot { display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: #84aa71; border-radius: 50%; }
+.intro { max-width: 700px; padding: 105px 0 62px; }
+.eyebrow, .section-kicker { margin: 0 0 17px; color: var(--coral); font-size: 10px; font-weight: 500; }
+h1, h2, p { margin-top: 0; } h1 { margin-bottom: 22px; font-size: clamp(42px, 6vw, 76px); line-height: .98; letter-spacing: -.075em; } h1 em { color: var(--coral); font-style: normal; } h2 { margin-bottom: 0; font-size: 21px; letter-spacing: -.04em; }
+.intro-copy { max-width: 480px; color: #626760; font-size: 16px; line-height: 1.65; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(280px, .85fr); gap: 18px; }
+.record-panel, .settings-panel { padding: 30px; border: 1px solid var(--line); background: rgba(255,253,248,.72); }
+.panel-heading { display: flex; align-items: start; justify-content: space-between; margin-bottom: 27px; } .panel-heading.compact { margin-bottom: 39px; }
+.format-badge { padding: 7px 9px; border: 1px solid var(--line); font-size: 9px; }
+.recorder-stage { display: grid; min-height: 278px; place-items: center; align-content: center; border: 1px solid #e5e1d7; background: #faf8f2; }
+.waveform { display: flex; align-items: center; justify-content: center; gap: 3px; width: 75%; height: 32px; margin-bottom: 17px; }
+.waveform i { display: block; width: 3px; height: 12px; background: #c9c8be; border-radius: 3px; } .waveform i:nth-child(3n) { height: 25px; } .waveform i:nth-child(4n) { height: 17px; }
+.record-button { display: grid; width: 84px; height: 84px; place-items: center; color: white; cursor: pointer; background: var(--coral); border: 0; border-radius: 50%; box-shadow: 0 8px 20px rgba(233,103,78,.22); transition: transform .2s, background .2s; } .record-button:hover { transform: translateY(-2px); } .record-button.recording { background: var(--ink); }
+.mic-icon { width: 15px; height: 22px; border: 2px solid currentColor; border-radius: 9px; position: relative; } .mic-icon::after { content: ''; position: absolute; left: 50%; bottom: -9px; width: 18px; height: 9px; border: 2px solid currentColor; border-top: 0; border-radius: 0 0 10px 10px; transform: translateX(-50%); }
+.button-text { margin-top: 10px; font-size: 0; } .stage-hint { margin: 28px 0 0; color: var(--muted); font-size: 12px; }
+.record-actions { margin-top: 23px; } button { font: inherit; } .primary-button, .secondary-button, .copy-button { cursor: pointer; border: 0; font-size: 12px; } .primary-button { padding: 13px 17px; color: white; background: var(--ink); } .primary-button span { margin-left: 24px; font-size: 18px; } .secondary-button, .copy-button { color: var(--muted); background: transparent; } button:disabled { cursor: not-allowed; opacity: .4; }
+.message { min-height: 17px; margin: 18px 0 0; color: var(--coral); font-size: 12px; } .message.success { color: var(--green); }
+.settings-panel label { display: block; margin-bottom: 9px; font-size: 12px; font-weight: 600; } .key-input-wrap { display: flex; align-items: center; border-bottom: 1px solid var(--ink); } input { width: 100%; padding: 10px 0; color: var(--ink); background: transparent; border: 0; outline: 0; font: 13px 'DM Mono', monospace; } .icon-button { color: var(--muted); cursor: pointer; background: transparent; border: 0; font-size: 10px; } .field-note { margin: 11px 0 28px; font-size: 9px; line-height: 1.55; } .model-row { padding: 15px 0; } .model-row strong { color: var(--ink); font-weight: 500; } .divider { height: 1px; margin: 16px 0 26px; background: var(--line); } .tip-title { margin-bottom: 9px; font-size: 12px; font-weight: 600; } .tip-copy { margin: 0; line-height: 1.7; font-size: 10px; }
+.result-section { margin-top: 18px; padding: 30px; border: 1px solid var(--line); background: rgba(255,253,248,.72); } .result-heading { margin-bottom: 24px; } .transcript-box { min-height: 135px; padding: 22px; background: #faf8f2; border: 1px solid #e5e1d7; } .placeholder { margin: 0; color: #aaa99f; font-size: 13px; } .transcript { margin: 0; font-size: 18px; line-height: 1.7; letter-spacing: .01em; } footer { margin-top: 52px; font-size: 9px; } footer span:last-child { color: #aaa99f; }
+@media (max-width: 700px) { .app-shell { padding: 22px 18px 26px; } .secure-label { display: none; } .intro { padding: 80px 0 45px; } h1 { font-size: 48px; } .workspace { grid-template-columns: 1fr; } .record-panel, .settings-panel, .result-section { padding: 22px; } .recorder-stage { min-height: 245px; } }

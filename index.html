@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f2eb">
+    <title>WebWhisper | 語音轉文字</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="WebWhisper 首頁">
+          <span class="brand-mark" aria-hidden="true">W</span>
+          <span>WebWhisper</span>
+        </a>
+        <span class="secure-label"><span class="status-dot"></span> 僅在本機處理介面</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">VOICE TO TEXT / OPENAI WHISPER</p>
+        <h1 id="page-title">把聲音，<em>留成文字。</em></h1>
+        <p class="intro-copy">在瀏覽器錄下清晰的一段話，交給 Whisper 整理成可以搜尋、複製與分享的文字。</p>
+      </section>
+
+      <section class="workspace" aria-label="錄音工作區">
+        <div class="record-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">01 / RECORD</p>
+              <h2>準備好就開始</h2>
+            </div>
+            <span class="format-badge">WEBM · 16 kHz</span>
+          </div>
+
+          <div class="recorder-stage" id="recorderStage">
+            <div class="waveform" id="waveform" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="timer" id="timer">00:00</div>
+            <button class="record-button" id="recordButton" type="button" aria-label="開始錄音">
+              <span class="mic-icon" aria-hidden="true"></span>
+              <span class="button-text">開始錄音</span>
+            </button>
+            <p class="stage-hint" id="stageHint">點擊按鈕，允許瀏覽器使用麥克風</p>
+          </div>
+
+          <div class="record-actions">
+            <button class="secondary-button" id="clearButton" type="button" disabled>清除錄音</button>
+            <button class="primary-button" id="transcribeButton" type="button" disabled>轉成文字 <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="message" id="message" role="status" aria-live="polite"></p>
+        </div>
+
+        <aside class="settings-panel" aria-label="設定">
+          <div class="panel-heading compact">
+            <div>
+              <p class="section-kicker">02 / CONNECT</p>
+              <h2>連接 Whisper</h2>
+            </div>
+            <span class="connection-icon" aria-hidden="true">⌁</span>
+          </div>
+          <label for="apiKey">OpenAI API key</label>
+          <div class="key-input-wrap">
+            <input id="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-...">
+            <button id="toggleKeyButton" class="icon-button" type="button" aria-label="顯示 API key">顯示</button>
+          </div>
+          <p class="field-note">金鑰只會暫存在這個分頁，不會寫入伺服器或儲存空間。</p>
+          <div class="model-row"><span>模型</span><strong>whisper-1</strong></div>
+          <div class="divider"></div>
+          <p class="tip-title">錄音小提示</p>
+          <p class="tip-copy">靠近麥克風說話，保持環境安靜。一次錄一個完整句子，辨識結果會更準確。</p>
+        </aside>
+      </section>
+
+      <section class="result-section" aria-labelledby="result-title">
+        <div class="result-heading">
+          <div>
+            <p class="section-kicker">03 / TRANSCRIPT</p>
+            <h2 id="result-title">你的文字</h2>
+          </div>
+          <button class="copy-button" id="copyButton" type="button" disabled aria-label="複製文字">複製文字 <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="transcript-box" id="transcriptBox">
+          <p class="placeholder" id="placeholder">轉錄完成後，文字會出現在這裡。</p>
+          <p class="transcript" id="transcript" hidden></p>
+        </div>
+      </section>
+
+      <footer><span>WebWhisper</span><span>Built for clear thoughts.</span></footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
