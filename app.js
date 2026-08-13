@@ -4,6 +4,10 @@ const transcribeButton = document.querySelector('#transcribeButton');
 const copyButton = document.querySelector('#copyButton');
 const apiKeyInput = document.querySelector('#apiKey');
 const toggleKeyButton = document.querySelector('#toggleKeyButton');
+const mqttPasswordInput = document.querySelector('#mqttPassword');
+const toggleMqttPassword = document.querySelector('#toggleMqttPassword');
+const mqttButton = document.querySelector('#mqttButton');
+const mqttStatus = document.querySelector('#mqttStatus');
 const timer = document.querySelector('#timer');
 const stageHint = document.querySelector('#stageHint');
 const message = document.querySelector('#message');
@@ -16,10 +20,24 @@ let audioChunks = [];
 let audioBlob;
 let timerInterval;
 let startedAt;
+let mqttClient;
+
+const mqttConfig = {
+  host: '86e69d625ca34b29810a0eedae4f6486.s1.eu.hivemq.cloud',
+  websocketPort: 8884,
+  topic: 'test/topic',
+  username: 'ckk3001'
+};
 
 function setMessage(text, success = false) {
   message.textContent = text;
   message.classList.toggle('success', success);
+}
+
+function setMqttStatus(text, connected = false) {
+  mqttStatus.textContent = text;
+  mqttStatus.classList.toggle('connected', connected);
+  mqttButton.textContent = connected ? '中斷 MQTT' : '連線 MQTT';
 }
 
 function updateTimer() {
@@ -94,7 +112,16 @@ transcribeButton.addEventListener('click', async () => {
     placeholder.hidden = true;
     transcript.hidden = false;
     copyButton.disabled = !data.text;
-    setMessage('轉錄完成。', true);
+    if (data.text && mqttClient?.connected) {
+      mqttClient.publish(mqttConfig.topic, data.text, { qos: 0 }, (publishError) => {
+        if (publishError) setMessage(`轉錄完成，但 MQTT 發布失敗：${publishError.message}`);
+        else setMessage('轉錄完成，已發布到 MQTT。', true);
+      });
+    } else if (data.text) {
+      setMessage('轉錄完成，但 MQTT 尚未連線。');
+    } else {
+      setMessage('轉錄完成。', true);
+    }
   } catch (error) {
     setMessage(`轉錄失敗：${error.message}`);
   } finally { transcribeButton.disabled = false; }
@@ -110,4 +137,46 @@ toggleKeyButton.addEventListener('click', () => {
   apiKeyInput.type = isPassword ? 'text' : 'password';
   toggleKeyButton.textContent = isPassword ? '隱藏' : '顯示';
   toggleKeyButton.setAttribute('aria-label', isPassword ? '隱藏 API key' : '顯示 API key');
+});
+
+toggleMqttPassword.addEventListener('click', () => {
+  const isPassword = mqttPasswordInput.type === 'password';
+  mqttPasswordInput.type = isPassword ? 'text' : 'password';
+  toggleMqttPassword.textContent = isPassword ? '隱藏' : '顯示';
+  toggleMqttPassword.setAttribute('aria-label', isPassword ? '隱藏 MQTT 密碼' : '顯示 MQTT 密碼');
+});
+
+mqttButton.addEventListener('click', () => {
+  if (mqttClient?.connected) {
+    mqttClient.end();
+    setMqttStatus('尚未連線');
+    return;
+  }
+  const password = mqttPasswordInput.value.trim();
+  if (!password) {
+    setMqttStatus('請先輸入 MQTT 密碼');
+    mqttPasswordInput.focus();
+    return;
+  }
+  if (!window.mqtt) {
+    setMqttStatus('MQTT 函式庫載入失敗');
+    return;
+  }
+  setMqttStatus('連線中…');
+  mqttClient = mqtt.connect(`wss://${mqttConfig.host}:${mqttConfig.websocketPort}/mqtt`, {
+    username: mqttConfig.username,
+    password,
+    clientId: `webwhisper-${Math.random().toString(16).slice(2)}`,
+    clean: true,
+    connectTimeout: 10000,
+    reconnectPeriod: 0
+  });
+  mqttClient.on('connect', () => setMqttStatus('MQTT 已連線 · test/topic', true));
+  mqttClient.on('error', (error) => {
+    setMqttStatus(`連線失敗：${error.message}`);
+    mqttClient.end(true);
+  });
+  mqttClient.on('close', () => {
+    if (mqttStatus.classList.contains('connected')) setMqttStatus('MQTT 已中斷');
+  });
 });

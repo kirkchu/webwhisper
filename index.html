@@ -68,8 +68,17 @@
           <p class="field-note">金鑰只會暫存在這個分頁，不會寫入伺服器或儲存空間。</p>
           <div class="model-row"><span>模型</span><strong>whisper-1</strong></div>
           <div class="divider"></div>
+          <label for="mqttPassword">MQTT 密碼</label>
+          <div class="key-input-wrap">
+            <input id="mqttPassword" type="password" autocomplete="off" placeholder="輸入 HiveMQ 密碼">
+            <button id="toggleMqttPassword" class="icon-button" type="button" aria-label="顯示 MQTT 密碼">顯示</button>
+          </div>
+          <div class="mqtt-meta"><span>broker</span><strong>HiveMQ Cloud</strong><span>topic</span><strong>test/topic</strong></div>
+          <button class="mqtt-button" id="mqttButton" type="button">連線 MQTT</button>
+          <p class="mqtt-status" id="mqttStatus" role="status" aria-live="polite">尚未連線</p>
+          <div class="divider"></div>
           <p class="tip-title">錄音小提示</p>
-          <p class="tip-copy">靠近麥克風說話，保持環境安靜。一次錄一個完整句子，辨識結果會更準確。</p>
+          <p class="tip-copy">先連線 MQTT，再錄製「今天天氣很好」。轉錄完成後，文字會自動發布到 test/topic。</p>
         </aside>
       </section>
 
@@ -89,6 +98,7 @@
 
       <footer><span>WebWhisper</span><span>Built for clear thoughts.</span></footer>
     </main>
+    <script src="https://unpkg.com/mqtt@5.14.1/dist/mqtt.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
