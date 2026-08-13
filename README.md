@@ -4,7 +4,7 @@
 
 ## 使用方式
 
-1. 開啟 [WebWhisper Pages](https://YOUR_GITHUB_USERNAME.github.io/webwhisper/)。
+1. 開啟 [WebWhisper Pages](https://kirkchu.github.io/webwhisper/)。
 2. 輸入自己的 OpenAI API key。
 3. 點擊「開始錄音」，說話後再次點擊停止，再按「轉成文字」。
 
