@@ -24,6 +24,7 @@ let mqttClient;
 
 const mqttConfig = {
   host: '86e69d625ca34b29810a0eedae4f6486.s1.eu.hivemq.cloud',
+  port: 8883,
   websocketPort: 8884,
   topic: 'test/topic',
   username: 'ckk3001'
